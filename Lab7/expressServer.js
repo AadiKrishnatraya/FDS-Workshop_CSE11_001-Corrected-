@@ -2,8 +2,28 @@ import express from "express";
 import cors from "cors"; 
 import dotenv from "dotenv";
 import connectDB from "./db.js";
+import Student from "./models/student.js";
 dotenv.config();
 connectDB();
+
+app.post("/test-db", async(req,res)=>{
+    try{
+        const student = await Student.create({
+            name:"Rahul Sharma",
+            email:"rahul@gmail.com",
+            course: "MERN Stack",
+        });
+        res.status(201).json({
+            message:"Data inserted successfully!",
+            data:student,
+        });
+    }catch(error){
+        res.status(500).json({
+            message:error.message,
+        })
+    }
+});
+
 let userData = [
     {
         id: null,
